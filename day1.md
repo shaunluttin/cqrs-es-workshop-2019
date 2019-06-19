@@ -1,9 +1,9 @@
 ## Key Terms
 
-Event Storming. Generate the ideas.
-Event Modeling. Create the blueprint.
-Event Sourcing. The change log becomes the primary source of data.
-Event Store. A stream database.
+* Event Storming. Generate the ideas.
+* Event Modeling. Create the blueprint.
+* Event Sourcing. The change log becomes the primary source of data.
+* Event Store. A stream database.
 
 ## Value Proposition
 
@@ -114,6 +114,7 @@ Command enters a service which takes three steps:
     * [this implies that the aggregate is data-store aware... is that true? does the aggregate publish an event?]
 Private business events.
 
+```
 // There is not a one to one mapping betweem commands and events.
 class Order {
 
@@ -136,6 +137,7 @@ class Order {
     /* Add validated event to pendingEvents and then call apply(). */
     private raise(event: Event);
 }
+```
 
 Don't return any state on the command; only return pass/fail, when fail include the exception message.
 
@@ -144,11 +146,13 @@ Don't return any state on the command; only return pass/fail, when fail include 
 `=>` is a boundary between layers.
 `->` is with a layer.
 
+```
 App -> cmd 
     => service -> domain with 'private events' -> service 
         => event store with 'private events' 
             => translator -> 'public messages' 
                 => external services
+```
 
 Private Events
 * targeted
@@ -174,6 +178,7 @@ These tests do not need to reference aggregates.
 
 ### Personal Overview right Now
 
+```
 Client Application(s)
      |
   Commands (DTO)
@@ -192,3 +197,4 @@ Output Services (Repositories)
 Event Store
      |
 Read Models
+```
